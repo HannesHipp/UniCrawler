@@ -54,25 +54,20 @@ class Download(Function):
         if not os.path.isdir(path.parent):
             os.makedirs(path.parent)
         with open(str(path) + '.pdf', 'wb') as file:
-            file.write(Session.get_file_content(filter_url(item))) 
+            file.write(Session.get_file_content(filter_url(item.url, item.url_format))) 
 
 def filter_name(name):
     for char in ['/', '\\', ':', '*', '?', '"', '<', '>', '|', '...']:
         name = " ".join(name.split(char))
     return " ".join(name.split())
 
-def filter_url(element):
-    url = element.url
-    if not hasattr(element, 'url_format'):
-        return url
+def filter_url(url, url_format:dict):
     if 'http' in url:
         return url
-    modified = False
-    for key in element.url_format.keys():
+    for key in url_format.keys():
         if key in url:
             if url[:2] == "./":
                 url = url[2:]
-            url = element.url_format[key] + url
-            modified = True
+            url = url_format[key] + url
             break
     return url

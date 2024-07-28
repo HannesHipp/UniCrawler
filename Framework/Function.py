@@ -24,7 +24,7 @@ class Function(QRunnable):
         try:
             self.execute()
         except:
-            traceback.print_exc()
+            # traceback.print_exc()
             value = sys.exc_info()[:2]
             self.error = str((value, traceback.format_exc()))
         self.signals.ended.emit()

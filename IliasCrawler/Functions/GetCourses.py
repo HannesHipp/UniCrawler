@@ -3,8 +3,7 @@ from IliasCrawler.Datapoints.Courses import Courses, Course
 from IliasCrawler.Datapoints.Username import Username
 from IliasCrawler.Datapoints.Password import Password
 from IliasCrawler.Session import Session
-from IliasCrawler.models.extractor.Element import Element
-from IliasCrawler.models.extractor.Extractor import Extractor
+from IliasCrawler.extractor.extractor import Extractor
 
 
 class GetCourses(Function):
@@ -19,10 +18,10 @@ class GetCourses(Function):
         COURSES_URL = 'https://ilias3.uni-stuttgart.de/ilias.php?baseClass=ildashboardgui&cmd=show&view=1'
         Session.set_session(self.username.value, self.password.value)
         extractor = Extractor('IliasCrawler\\models\\ilias')
-        root = Element(extractor.root_type)
-        root.set_soup(Session.get_content(COURSES_URL))
+        root = extractor.root_type(None)
         root.name = 'Ilias'
-        course_elements = extractor.extract_data(root)
+        root.set_soup(Session.get_content(COURSES_URL))
+        course_elements = extractor.crawl_node(root)
 
         old_courses = self.courses.value
         current_courses = []

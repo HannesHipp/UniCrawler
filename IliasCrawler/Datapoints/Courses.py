@@ -26,10 +26,13 @@ class Course:
 
     def __init__(self, element) -> None:
         self.element = element
-        self.name = element.name
         self.to_download = False
         self.is_new = False
         self.was_crawled = False
+
+    @property
+    def name(self):
+        return self.element.name
 
     def get_hash(self):
         return self.element.url.split("crs_")[1].split(".html")[0]
