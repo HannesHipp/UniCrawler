@@ -1,5 +1,6 @@
 from bs4 import BeautifulSoup
 import requests
+import os
 
 
 class Session:
@@ -37,12 +38,14 @@ class Session:
     def is_valid(session):
         TESTURL = "https://ilias3.uni-stuttgart.de/ilias.php?baseClass=ilDashboardGUI&cmd=jumpToSelectedItems"
         test_content = BeautifulSoup(session.get(TESTURL).text, "lxml")
+        # with open('test.txt', 'w') as file:
+        #     file.write(test_content.prettify())
+
         # If "Anmelden" button is present, then we are not already logged in
-        if test_content.find(attrs={"aria-label": "Anmelden"}) is not None:
+        if test_content.find(attrs={"class": "glyphicon glyphicon-login"}) is not None:
             return False
         else:
             return True
-
 
     @staticmethod
     def get_content(url):
