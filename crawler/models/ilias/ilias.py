@@ -146,10 +146,10 @@ class Video(Root):
     
     @classmethod
     def get_dynamic_attrs(cls, tag):
-        print(get_attr(tag, 'src'))
+        url = get_attr(tag, 'src')	
         return {
-            # 'url': get_attr(tag, 'src'),
-            # 'name': get_attr(tag, 'src').split('?il_wac_token')[0].split('/')[-1]
+            'url': url,
+            'name': url.split('?il_wac_token')[0].split('/')[-1]
         }
 
 
