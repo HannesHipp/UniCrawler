@@ -24,10 +24,7 @@ class OutputFrame(Frame):
         else:
            self.auto_start = True
 
-        if next_frame_button_names:
-           for next_frame_button_name in next_frame_button_names:
-               getattr(self, next_frame_button_name).pressed.connect(self.finalize)
-        else:
+        if not next_frame_button_names:
            self.function.signals.ended.connect(self.finalize)
             
 
@@ -39,5 +36,5 @@ class OutputFrame(Frame):
     def get_module_errors(self):
         module_errors = super().get_module_errors()
         if self.function.error:
-            module_errors.extend(self.function.error)
+            module_errors.append(self.function.error)
         return module_errors
