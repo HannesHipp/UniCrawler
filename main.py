@@ -1,21 +1,21 @@
-from Framework.App import App
+from framework.app import App
 
-from IliasCrawler.Datapoints.Username import Username
-from IliasCrawler.Datapoints.Password import Password
-from IliasCrawler.Datapoints.Courses import Courses
-from IliasCrawler.Datapoints.FilesAndVideos import FilesAndVideos
-from IliasCrawler.Datapoints.Path import Path
-from IliasCrawler.Datapoints.Autostart import Autostart
+from crawler.datapoints.username import Username
+from crawler.datapoints.password import Password
+from crawler.datapoints.courses import Courses
+from crawler.datapoints.files_and_videos import FilesAndVideos
+from crawler.datapoints.path import Path
+from crawler.datapoints.autostart import Autostart
 
-from IliasCrawler.Frames.CrawlingFrame import CrawlingFrame
-from IliasCrawler.Frames.DownloadingFrame import DownloadingFrame
-from IliasCrawler.Frames.LoginFrame import LoginFrame
-from IliasCrawler.Frames.LoginValidationFrame import LoginValidationFrame
-from IliasCrawler.Frames.PathFrame import PathFrame
-from IliasCrawler.Frames.GetCoursesFrame import GetCoursesFrame
-from IliasCrawler.Frames.CourseSelectionFrame import CourseSelectionFrame
-from IliasCrawler.Frames.AutostartFrame import AutostartFrame
-from IliasCrawler.Frames.SuccessFrame import SuccessFrame
+from crawler.frames.crawling_frame import CrawlingFrame
+from crawler.frames.downloading_frame import DownloadingFrame
+from crawler.frames.login_frame import LoginFrame
+from crawler.frames.login_validation_frame import LoginValidationFrame
+from crawler.frames.path_selection_frame import PathSelectionFrame
+from crawler.frames.get_courses_frame import GetCoursesFrame
+from crawler.frames.course_selection_frame import CourseSelectionFrame
+from crawler.frames.autostart_frame import AutostartFrame
+from crawler.frames.end_frame import EndFrame
 
 app = App()
 
@@ -30,13 +30,13 @@ files_and_videos = FilesAndVideos()
 
 login_frame = LoginFrame(username, password)
 login_validation_frame = LoginValidationFrame(username, password)
-path_frame = PathFrame(path)
+path_frame = PathSelectionFrame(path)
 get_courses_frame = GetCoursesFrame(username, password, courses, autostart)
 course_selection_frame = CourseSelectionFrame(courses)
 autostart_frame = AutostartFrame()
 crawling_frame = CrawlingFrame(courses, files_and_videos)
 downloading_frame = DownloadingFrame(path, files_and_videos)
-success_frame = SuccessFrame()
+success_frame = EndFrame()
 
 
 login_frame.addNextFrames(login_validation_frame)

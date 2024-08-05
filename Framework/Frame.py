@@ -1,11 +1,10 @@
-from Framework.GuiModuls.GuiModul import GuiModul
-from Framework.Window import Window
-
-import IliasCrawler.resources.resources
-
-from PyQt5.QtCore import pyqtSignal, QThreadPool
-from PyQt5.QtWidgets import QWidget, QPushButton
+from PyQt5.QtCore import pyqtSignal
+from PyQt5.QtWidgets import QWidget
 from PyQt5.uic import loadUi
+
+from framework.gui_modules.gui_module import GuiModule
+from framework.window import Window
+import crawler.resources.resources
 
 
 class Frame(QWidget):
@@ -19,15 +18,15 @@ class Frame(QWidget):
         for button_name in next_frame_button_names:
             button = getattr(self, button_name)
             button.pressed.connect(self.finalize)
-        self.gui_moduls = []
+        self.gui_modules = []
         self.display.connect(Window.instance.selectFrame)
 
-    def add_module(self, guiModul: GuiModul):
-        self.gui_moduls.append(guiModul)
+    def add_module(self, gui_module: GuiModule):
+        self.gui_modules.append(gui_module)
 
     def show(self):
-        for guiModul in self.gui_moduls:
-            guiModul.update()
+        for gui_module in self.gui_modules:
+            gui_module.update()
         self.display.emit(self)
 
     def finalize(self):
@@ -49,7 +48,7 @@ class Frame(QWidget):
 
     def get_module_errors(self):
         errors = []
-        for gui_module in self.gui_moduls:
+        for gui_module in self.gui_modules:
             if gui_module.error is not None:
                 errors.append(gui_module.error)
         return errors
@@ -58,7 +57,7 @@ class Frame(QWidget):
         print(errors)
 
     def save_datapoints(self):
-        for gui_module in self.gui_moduls:
+        for gui_module in self.gui_modules:
             gui_module.save_datapoint()
 
     def decide_next_frame(self):

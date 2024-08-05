@@ -1,9 +1,9 @@
 import os
 import sys
 
-from PyQt5.QtCore import QObject, QThreadPool
+from PyQt5.QtCore import QObject
 from PyQt5.QtWidgets import QApplication
-from Framework.Window import Window
+from framework.window import Window
 
 
 class App(QObject):
