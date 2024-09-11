@@ -58,4 +58,5 @@ else:
     # Auflösung Laptop Michi
     # Verkehrstechnik nicht vollständig
     # Kurse Ausklappmenü
-    # 
+    # tree-importance einbeziehen und redundante Ordner löschen
+    # Shorten Pathlength
