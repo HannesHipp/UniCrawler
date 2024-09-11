@@ -15,8 +15,8 @@ class Root(HtmlNode):
         )
     )
     url_format = {
-    'ilias.php?': 'https://ilias3.uni-stuttgart.de/',
-    'Uni_Stuttgart/mobs/': 'https://ilias3.uni-stuttgart.de/'
+        'ilias.php?': 'https://ilias3.uni-stuttgart.de/',
+        'Uni_Stuttgart/mobs/': 'https://ilias3.uni-stuttgart.de/'
     }
     tree_importance = 0
 
@@ -51,9 +51,11 @@ class Course(Root):
         'IlContainerBlock',
         'Folder',
         'OPDFolder',
+        'InteractiveVideoFolder',
         'Lm',
         'File',
-        'Video'
+        'Video',
+        'CopaFolder'
     ]
     is_leaf = True
     locator = Locator(
@@ -71,13 +73,9 @@ class IlContainerBlock(Root):
     child_types = [
         'Folder',
         'OPDFolder',
-        'Lm'
+        'Lm',
+        'InteractiveVideoFolder'
     ]
-    scope = Locator(
-        ExactFilter(
-            {'id':'mainspacekeeper'}
-        )
-    )
     locator = Locator(
         ExactFilter(
             {'class':'ilContainerBlock container-fluid form-inline'}
@@ -100,6 +98,7 @@ class Folder(Root):
         'Folder',
         'Lm',
         'OPDFolder',
+        'InteractiveVideoFolder',
         'File',
         'Video'
     ]
@@ -279,10 +278,81 @@ class OPD(Root):
         json_url = f'https://ilias3.uni-stuttgart.de/Customizing/global/plugins/Services/Repository/RepositoryObject/Opencast/api.php/episode.json?id={id}%2F{id2}'
         json = Session.get_file_content(json_url)
         videos = loads(json)["search-results"]["result"]["mediapackage"]["media"]["track"]
-        video = [video for video in videos if "presentation" in video["type"]][0]
+        if len(videos) == 0:
+            raise AttributeError()
+        if len(videos) > 1:
+            videos = [video for video in videos if "presentation" in video["type"]]
+        video = videos[0]
         extenstion = video['mimetype'].split('/')[1]
         return {
             'name': f"{name}.{extenstion}",
             'url': video["url"]
         }
 
+class InteractiveVideoFolder(Root):
+
+    child_types = ['Video']
+    is_leaf = True
+    locator = Locator(
+        ContainsFilter(
+            {'href':'Cmd=showContent'}
+        )
+    )
+
+    name = DynamicAttribute('text')
+    url = DynamicAttribute('href')
+
+# class CopaFolder(Root):
+
+#     child_types = [
+#         'CopaSubFolder',
+#         'File', 
+#         'Video'
+#     ]
+
+#     is_leaf = True
+#     locator = Locator(
+#         ContainsFilter(
+#             {'href':'target=copa_'}
+#         )
+#     )
+#     name = DynamicAttribute(
+#         'text',
+#         locator=Locator(
+#             ExactFilter(
+#                 {'class':'ilc_text_inline_Strong'}
+#             )
+#         )
+#     )
+#     url = DynamicAttribute('href')
+
+#     url_format = {
+#         'goto.php': 'https://ilias3.uni-stuttgart.de/'    }
+
+# class CopaSubFolder(Root):
+
+#     child_types = [
+#         'CopaSubFolder',
+#         'File', 
+#         'Video'
+#     ]
+
+#     is_leaf = True
+#     locator = Locator(
+#         ContainsFilter(
+#             {'href':'target=copa_'}
+#         )
+#     )
+#     name = DynamicAttribute(
+#         'text',
+#         locator=Locator(
+#             ExactFilter(
+#                 {'class':'ilc_Paragraph ilc_text_block_Kapitelueberschrift ilc_link_ExtLink'}
+#             )
+#         )
+#     )
+#     url = DynamicAttribute('href')
+
+#     url_format = {
+#         'goto.php': 'https://ilias3.uni-stuttgart.de/'   
+#     }
