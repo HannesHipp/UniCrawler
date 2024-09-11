@@ -15,9 +15,9 @@ class Extractor:
 
     def crawl_node(self, node: HtmlNode):
         leafs = []
-        for node_type in type(node).child_types:
-            child_nodes = self.extract_from_node(node_type, node)
-            if node_type.is_leaf:
+        for child_type in type(node).child_types:
+            child_nodes = self.extract_from_node(child_type, node)
+            if child_type.is_leaf:
                 leafs.extend(child_nodes)
             else:
                 for child_node in child_nodes:

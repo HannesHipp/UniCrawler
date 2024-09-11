@@ -1,4 +1,5 @@
 from abc import ABC
+from typing import Self
 from bs4 import BeautifulSoup
 
 
@@ -56,18 +57,18 @@ class ContainsFilter:
 class Locator:
 
     def __init__(self, *filter, subitem_locator=None) -> None:
-        self.filter:list[Filter] = filter
-        self.sub_item_locator = subitem_locator
+        self.filter: list[Filter] = filter
+        self.sub_item_locator: Self = subitem_locator
 
-    def find_elements(self, parent_soup, scope_locator):
+    def find_elements(self, parent_soup, scope_locator: Self = None):
         if scope_locator:
-            if scope_soup := scope_locator.find_elements(parent_soup, None):
-                parent_soup = scope_soup[0]
+            if scope_elements := scope_locator.find_elements(parent_soup):
+                parent_soup = scope_elements[0]
         matches = self.filter[0].filter_soup(parent_soup)
         for filter in self.filter[1:]:
             matches = filter.filter_list(matches)
         if matches and self.sub_item_locator:
-            matches = self.sub_item_locator.find_elements(matches[0], None)
+            matches = self.sub_item_locator.find_elements(matches[0])
         return matches
 
 

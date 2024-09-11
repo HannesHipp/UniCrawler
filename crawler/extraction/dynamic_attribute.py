@@ -9,7 +9,7 @@ class DynamicAttribute:
 
     def get_value(self, tag):
         if self.locator:
-            tags = self.locator.find_elements(tag, None)
+            tags = self.locator.find_elements(tag)
             if not tags:
                 return None
             else:

@@ -13,10 +13,10 @@ class HtmlNode:
     dynamic_attrs: dict[str, DynamicAttribute]|None = None
     
     @classmethod
-    def find_canidates(cls, parent) -> list[BeautifulSoup]:
-        if not cls.locator:
-            raise Exception(f"No locator or method 'find_canidates' was supplied to model class {cls.__name__}")
-        return cls.locator.find_elements(parent.soup, cls.scope)
+    def find_canidates(type: type[Self], parent: Self) -> list[BeautifulSoup]:
+        if not type.locator:
+            raise Exception(f"No locator or method 'find_canidates' was supplied to model class {type.__name__}")
+        return type.locator.find_elements(parent.soup, type.scope)
     
     @classmethod
     def get_dynamic_attrs(cls, tag) -> dict[str,str]:
