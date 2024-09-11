@@ -3,7 +3,7 @@ from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QStandardItemModel, QStandardItem, QBrush, QColor
 
 from framework.datapoint import Datapoint
-from framework.gui_modules.gui_module import GuiModule
+from framework.gui_module import GuiModule
 
 
 class ObjSelectionList(GuiModule):

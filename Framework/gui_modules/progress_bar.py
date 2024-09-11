@@ -1,6 +1,6 @@
 from PyQt5.QtWidgets import QProgressBar, QLabel
 from framework.datapoint import Datapoint
-from framework.gui_modules.gui_module import GuiModule
+from framework.gui_module import GuiModule
 
 
 class ProgressBar(GuiModule):

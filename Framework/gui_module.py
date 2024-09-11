@@ -16,8 +16,7 @@ class GuiModule:
         self.error = error
     
     def update(self):
-        value = self.datapoint.value
-        self.set_value(value)
+        self.set_value(self.datapoint.value)
 
     def save_datapoint(self):
         self.datapoint.save_to_db()

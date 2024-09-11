@@ -2,7 +2,7 @@ from PyQt5.QtCore import pyqtSignal
 from PyQt5.QtWidgets import QWidget
 from PyQt5.uic import loadUi
 
-from framework.gui_modules.gui_module import GuiModule
+from framework.gui_module import GuiModule
 from framework.window import Window
 import crawler.resources.resources
 
