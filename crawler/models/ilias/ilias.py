@@ -126,6 +126,9 @@ class File(Root):
     name = DynamicAttribute('text')
     url = DynamicAttribute('href')
 
+    def get_type_hash(self):
+        return self.url.split("_file_")[1][:7]
+
 
 class Video(Root):
     
@@ -288,6 +291,7 @@ class OPD(Root):
             'name': f"{name}.{extenstion}",
             'url': video["url"]
         }
+    
 
 class InteractiveVideoFolder(Root):
 

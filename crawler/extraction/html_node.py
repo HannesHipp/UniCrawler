@@ -40,3 +40,9 @@ class HtmlNode:
 
     def delete_soup(self):
         self.soup = None
+
+    def get_hash(self):
+        return f"{self.__class__.__name__}_{self.get_type_hash()}"
+    
+    def get_type_hash(self):
+        return self.url
