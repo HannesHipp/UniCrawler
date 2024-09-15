@@ -2,7 +2,7 @@ import os
 from framework.datapoint import Datapoint
 from framework.function import Function
 
-from crawler.datapoints.files_and_videos import FilesAndVideos
+from crawler.datapoints.files import Files
 from crawler.datapoints.path import Path
 from crawler.session import Session
 
@@ -14,13 +14,13 @@ class Download(Function):
     def __init__(
             self, 
             path: Path,
-            files_and_videos: FilesAndVideos, 
+            files: Files, 
             current_file: Datapoint,
             percentage_downloaded: Datapoint
         ) -> None:
         super().__init__()
         self.path = path
-        self.files_and_videos = files_and_videos
+        self.files = files
         self.current_file = current_file
         self.percentage_downloaded = percentage_downloaded
 
@@ -28,16 +28,21 @@ class Download(Function):
         # shorten tree 
 
         # preprocess file paths
-        self.shorten_long_paths(self.files_and_videos.value)
+        # self.shorten_long_paths(self.files.value)
         # download files
-        total_downloads = len(self.files_and_videos.value)
-        downloaded = 0
-        for item in self.files_and_videos.value:
-            self.current_file.submit_value(item.name)
-            self.download(item)
-            downloaded += 1
-            self.percentage_downloaded.submit_value(int(downloaded/total_downloads*100))
+        files_to_download = [file for file in self.files.value if not file.is_saved]
+        for index, file in enumerate(files_to_download):
+            self.current_file.submit_value(file.name)
+            self.download(file.html_node)
+            file.is_saved = True
+            self.percentage_downloaded.submit_value(int((index+1)/len(files_to_download)*100))
         
+    def download(self, item):
+        path = self.get_path(item) 
+        if not os.path.isdir(path.parent):
+            os.makedirs(path.parent)
+        with open(str(path) + '.pdf', 'wb') as file:
+            file.write(Session.get_file_content(filter_url(item.url, item.url_format))) 
 
     def get_path(self, element):
         if element.parent is None:
@@ -50,13 +55,6 @@ class Download(Function):
         for item in data:
             while len(str(self.get_path(item)) + '.pdf') > windows_path_length_limit:  # Convert to string for length check
                 item.parent = item.parent.parent
-
-    def download(self, item):
-        path = self.get_path(item) 
-        if not os.path.isdir(path.parent):
-            os.makedirs(path.parent)
-        with open(str(path) + '.pdf', 'wb') as file:
-            file.write(Session.get_file_content(filter_url(item.url, item.url_format))) 
 
 def filter_name(name):
     for char in ['/', '\\', ':', '*', '?', '"', '<', '>', '|', '...']:

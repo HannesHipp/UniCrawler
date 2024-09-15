@@ -3,24 +3,24 @@ from framework.gui_modules.progress_bar import ProgressBar
 from framework.gui_modules.text_label import TextLabel
 from framework.output_frame import OutputFrame
 
-from crawler.datapoints.files_and_videos import FilesAndVideos
+from crawler.datapoints.files import Files
 from crawler.datapoints.path import Path
 from crawler.functions.download import Download
 
 
 class DownloadingFrame(OutputFrame):
 
-    def __init__(self, path: Path, files_and_videos: FilesAndVideos):
+    def __init__(self, path: Path, files: Files):
         current_file = Datapoint()
         percentage_downloaded = Datapoint()
-        function = Download(path, files_and_videos, current_file, percentage_downloaded)
+        function = Download(path, files, current_file, percentage_downloaded)
         super().__init__(
             path="crawler\\resources\\downloading_view.ui",
-            datapoints=[path, files_and_videos],
+            datapoints=[path, files],
             function=function
         )
         self.path = path
-        self.files_and_videos = files_and_videos
+        self.files = files
         self.add_module(
             ProgressBar(percentage_downloaded, self.progress_bar, self.label_percentage)
         )

@@ -4,23 +4,23 @@ from framework.gui_modules.text_label import TextLabel
 from framework.output_frame import OutputFrame
 
 from crawler.datapoints.courses import Courses
-from crawler.datapoints.files_and_videos import FilesAndVideos
+from crawler.datapoints.files import Files
 from crawler.functions.crawl import Crawl
 
 
 class CrawlingFrame(OutputFrame):
 
-    def __init__(self, courses: Courses, files_and_videos: FilesAndVideos):
+    def __init__(self, courses: Courses, files: Files):
         current_course_name = Datapoint()
         percentage_crawled = Datapoint()
-        function = Crawl(courses, files_and_videos, current_course_name, percentage_crawled)
+        function = Crawl(courses, files, current_course_name, percentage_crawled)
         super().__init__(
             path="crawler\\resources\\crawling_view.ui",
-            datapoints=[courses, files_and_videos],
+            datapoints=[courses, files],
             function=function
         )
         self.courses = courses
-        self.files_and_videos = files_and_videos
+        self.files = files
         self.add_module(
             ProgressBar(percentage_crawled, self.progress_bar, self.label_percentage)
         )
