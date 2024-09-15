@@ -11,8 +11,8 @@ from crawler.functions.crawl import Crawl
 class CrawlingFrame(OutputFrame):
 
     def __init__(self, courses: Courses, files_and_videos: FilesAndVideos):
-        current_course_name = Datapoint(save=False)
-        percentage_crawled = Datapoint(save=False)
+        current_course_name = Datapoint()
+        percentage_crawled = Datapoint()
         function = Crawl(courses, files_and_videos, current_course_name, percentage_crawled)
         super().__init__(
             path="crawler\\resources\\crawling_view.ui",

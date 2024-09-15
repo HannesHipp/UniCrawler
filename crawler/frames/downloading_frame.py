@@ -11,8 +11,8 @@ from crawler.functions.download import Download
 class DownloadingFrame(OutputFrame):
 
     def __init__(self, path: Path, files_and_videos: FilesAndVideos):
-        current_file = Datapoint(save=False)
-        percentage_downloaded = Datapoint(save=False)
+        current_file = Datapoint()
+        percentage_downloaded = Datapoint()
         function = Download(path, files_and_videos, current_file, percentage_downloaded)
         super().__init__(
             path="crawler\\resources\\downloading_view.ui",

@@ -7,13 +7,11 @@ class Datapoint(QObject):
     value_changed = pyqtSignal()
     invalidate = pyqtSignal()
 
-    def __init__(self, save=True) -> None:
+    def __init__(self, database:Database|None = None) -> None:
         super().__init__()
         value = None
-        database = None
-        if save:
-            database = Database(self.__class__.__name__.lower())
-            value = self.tuple_list_to_value(database.getTuplelist())
+        if database:
+            value = self.from_database(database.get())
         self.database = database
         self.value = value
         self.invalidate.connect(self._invalidate)
@@ -30,13 +28,11 @@ class Datapoint(QObject):
     
     def _invalidate(self):
         self._set_value(None)
-        if self.database:
-            self.database.clearTable()
 
     def save_to_db(self):
         if self.database:
-            self.database.saveTuplelist(
-                self.value_to_tuple_list(self.value))
+            self.database.save(
+                self.to_database(self.value))
 
     def has_error(self, value):
         response = self.is_valid(value)
@@ -47,12 +43,8 @@ class Datapoint(QObject):
     def is_valid(self, value):
         return True
 
-    def tuple_list_to_value(self, tupleList):
-        raise Exception(
-            f"tuple_list_to_value() method not implemented for {self.__class__.__name__}"
-        )
+    def from_database(self, stored_value):
+        return stored_value
 
-    def value_to_tuple_list(self, value):
-        raise Exception(
-            f"value_to_tuple_list() method not implemented for {self.__class__.__name__}"
-        )
+    def to_database(self, value):
+        return value

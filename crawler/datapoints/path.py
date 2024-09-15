@@ -1,22 +1,25 @@
 import pathlib
+from framework.database import ReadableDatabase
 from framework.datapoint import Datapoint
 
 
 class Path(Datapoint):
 
     def __init__(self) -> None:
-        super().__init__()
+        super().__init__(
+            ReadableDatabase('path')
+        )
 
     def is_valid(self, value):
         if value:
             return True
         else:
             return "Es muss ein Pfad ausgewählt werden."
-
-    def tuple_list_to_value(self, tuple_list):
-        if not tuple_list:
+        
+    def from_database(self, stored_value):
+        if not stored_value:
             return None
-        return pathlib.Path(tuple_list[0][0])
+        return pathlib.Path(stored_value)
 
-    def value_to_tuple_list(self, path):
-        return [(str(path),)]
+    def to_database(self, path):
+        return str(path)

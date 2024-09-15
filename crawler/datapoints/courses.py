@@ -1,23 +1,28 @@
+from framework.database import ReadableDatabase
 from framework.datapoint import Datapoint
 
 
 class Courses(Datapoint):
 
     def __init__(self) -> None:
-        super().__init__()
+        super().__init__(
+            ReadableDatabase('courses')
+        )
 
-    def tuple_list_to_value(self, tuple_list: list[tuple]):
+    def from_database(self, stored_value: list[tuple]):
         result = {}
-        for tuple in tuple_list:
-            result[tuple[0]] = True if tuple[1] == '1' else False
+        if not stored_value:
+            return result
+        for tuple in stored_value:
+            result[tuple[0]] = tuple[1]
         return result
 
-    def value_to_tuple_list(self, courses):
+    def to_database(self, courses):
         result = []
         for course in courses:
             result.append((
                 course.get_hash(), 
-                '1' if course.to_download else '0'
+                course.to_download
             ))
         return result
 
