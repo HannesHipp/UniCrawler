@@ -18,8 +18,8 @@ class CourseSelectionFrame(Frame):
                 courses, 
                 self.listView,
                 'name', 
-                "to_crawl", 
-                "is_new"
+                'to_crawl', 
+                'is_new'
             )
         )
 
