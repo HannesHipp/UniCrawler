@@ -14,7 +14,7 @@ class LoginFrame(Frame):
         self.add_module(TextField(username, self.textfield_username))
         self.add_module(TextField(password, self.textfield_password))
 
-    def addNextFrames(self, loginValidationFrame):
+    def add_next_frames(self, loginValidationFrame):
         self.loginValidationFrame = loginValidationFrame
 
     def decide_next_frame(self, pressedButton):

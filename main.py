@@ -39,12 +39,12 @@ downloading_frame = DownloadingFrame(path, files_and_videos)
 success_frame = EndFrame()
 
 
-login_frame.addNextFrames(login_validation_frame)
-login_validation_frame.addNextFrames(login_frame, path_frame)
-path_frame.addNextFrames(get_courses_frame)
-get_courses_frame.addNextFrames(course_selection_frame, autostart_frame)
-course_selection_frame.addNextFrames(crawling_frame)
-autostart_frame.addNextFrames(course_selection_frame, crawling_frame)
+login_frame.add_next_frames(login_validation_frame)
+login_validation_frame.add_next_frames(login_frame, path_frame)
+path_frame.add_next_frames(get_courses_frame)
+get_courses_frame.add_next_frames(course_selection_frame, autostart_frame)
+course_selection_frame.add_next_frames(crawling_frame)
+autostart_frame.add_next_frames(course_selection_frame, crawling_frame)
 crawling_frame.add_next_frames(downloading_frame)
 downloading_frame.add_next_frames(success_frame)
 

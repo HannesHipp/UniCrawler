@@ -19,7 +19,7 @@ class Frame(QWidget):
             button = getattr(self, button_name)
             button.pressed.connect(self.finalize)
         self.gui_modules = []
-        self.display.connect(App.instance.selectFrame)
+        self.display.connect(App.instance.select_frame)
 
     def add_module(self, gui_module: GuiModule):
         self.gui_modules.append(gui_module)

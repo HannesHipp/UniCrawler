@@ -15,7 +15,7 @@ class LoginValidationFrame(OutputFrame):
         self.username = username
         self.password = password
 
-    def addNextFrames(self, loginFrame, pathFrame):
+    def add_next_frames(self, loginFrame, pathFrame):
         self.loginFrame = loginFrame
         self.pathFrame = pathFrame
 

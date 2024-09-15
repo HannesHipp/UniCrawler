@@ -13,7 +13,7 @@ class GetCoursesFrame(OutputFrame):
         self.courses = courses
         self.autostart = autostart
 
-    def addNextFrames(self, courseSelectionFrame, autostartFrame):
+    def add_next_frames(self, courseSelectionFrame, autostartFrame):
         self.courseSelectionFrame = courseSelectionFrame
         self.autostartFrame = autostartFrame
 

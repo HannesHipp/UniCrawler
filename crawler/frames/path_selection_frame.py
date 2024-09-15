@@ -14,7 +14,7 @@ class PathSelectionFrame(Frame):
             PathSelector(path, self.lineedit_path, self.button_select_path)
         )
 
-    def addNextFrames(self, getCoursesFrame):
+    def add_next_frames(self, getCoursesFrame):
         self.getCoursesFrame = getCoursesFrame
 
     def decide_next_frame(self, pressedButton):

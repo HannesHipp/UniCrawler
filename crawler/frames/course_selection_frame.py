@@ -22,7 +22,7 @@ class CourseSelectionFrame(Frame):
             )
         )
 
-    def addNextFrames(self, crawlingFrame):
+    def add_next_frames(self, crawlingFrame):
         self.crawlingFrame = crawlingFrame
 
     def decide_next_frame(self, pressedButton):

@@ -18,7 +18,7 @@ class AutostartFrame(OutputFrame):
             TextLabel(autostartTimer,  self.label_timer, lambda x: x)
         )
 
-    def addNextFrames(self, courseSelectionFrame, crawlingFrame):
+    def add_next_frames(self, courseSelectionFrame, crawlingFrame):
         self.courseSelectionFrame = courseSelectionFrame
         self.crawlingFrame = crawlingFrame
 
