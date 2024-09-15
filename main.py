@@ -49,9 +49,9 @@ crawling_frame.add_next_frames(downloading_frame)
 downloading_frame.add_next_frames(success_frame)
 
 if username.value and password.value and path.value:
-    app.startWith(get_courses_frame)
+    app.start_with(get_courses_frame)
 else:
-    app.startWith(login_frame)
+    app.start_with(login_frame)
 
 # TO-DO
     # Herruntergeladene Items werden nicht gespeichert

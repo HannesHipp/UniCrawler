@@ -8,7 +8,7 @@ from time import sleep
 class AutostartFrame(OutputFrame):
 
     def __init__(self):
-        autostartTimer = Datapoint(save=False)
+        autostartTimer = Datapoint()
         super().__init__(
             path="crawler\\resources\\autostart_view.ui",
             function=AutostartCountdown(autostartTimer),

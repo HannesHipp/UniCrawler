@@ -1,29 +1,38 @@
 import os
 import sys
-
-from PyQt5.QtCore import QObject
-from PyQt5.QtWidgets import QApplication
-from framework.window import Window
+from typing import Self
+from PyQt5.QtWidgets import QApplication, QWidget, QVBoxLayout, QWidget, QStackedWidget
 
 
-class App(QObject):
+class App(QWidget):
 
-    """penisapp - the best app in the whole f**** world mothafocka"""
+    instance:Self|None = None
 
-    def __init__(self) -> None:
-        super().__init__()
-        os.environ["QT_AUTO_SCREEN_SCALE_FACTOR"] = "1"
+    def __init__(self):
         self.qApp = QApplication(sys.argv)
-        self.window = Window()
+        super().__init__()
+        # os.environ["QT_AUTO_SCREEN_SCALE_FACTOR"] = "1"
+        self.stackedWidget = QStackedWidget()
+        mainLayout = QVBoxLayout()
+        mainLayout.setSpacing(0)
+        mainLayout.setContentsMargins(0, 0, 0, 0)
+        mainLayout.addWidget(self.stackedWidget)
+        self.setFixedSize(800, 500)
+        self.setLayout(mainLayout)
+        App.instance = self
+        self.frames = []
+        self.show()
 
-    def startWith(self, frame):
+    def start_with(self, frame):
         frame.show()
         sys.exit(self.qApp.exec_())
 
-    def cock(self):
-        print("""p n the v wird freigesetzt
-        #doityourself
-        #freecock
-        #ANDFUCKINGFREEBOOOOOOOOBS
-        SHOW BOOBS PICS AND print
-        .vars""")
+    def add_frame(self, frame):
+        self.frames.append(frame)
+        self.stackedWidget.addWidget(frame)
+
+    def select_frame(self, frame):
+        if frame not in self.frames:
+            self.add_frame(frame)
+        index = self.frames.index(frame) + 1
+        self.stackedWidget.setCurrentIndex(index)

@@ -5,54 +5,46 @@ from framework.database import Database
 class Datapoint(QObject):
 
     value_changed = pyqtSignal()
-    invalidate = pyqtSignal()
 
-    def __init__(self, save=True) -> None:
+    def __init__(self, database: Database = None) -> None:
         super().__init__()
-        value = None
-        database = None
-        if save:
-            database = Database(self.__class__.__name__.lower())
-            value = self.tuple_list_to_value(database.getTuplelist())
+        self.value = None
         self.database = database
-        self.value = value
-        self.invalidate.connect(self._invalidate)
+        if database:
+            self.value = self.from_database(database.get())
 
     def _set_value(self, value):
         self.value = value
         self.value_changed.emit()
 
     def submit_value(self, value):
-        error = self.has_error(value)
-        if not error:
+        if value == self.value:
+            return
+        validation_result = self.is_valid(value)
+        if validation_result is True:
             self._set_value(value)
-        return error
-    
-    def _invalidate(self):
+        else:
+            raise ValidationError(validation_result)
+
+    def reset_value(self):
         self._set_value(None)
-        if self.database:
-            self.database.clearTable()
-
-    def save_to_db(self):
-        if self.database:
-            self.database.saveTuplelist(
-                self.value_to_tuple_list(self.value))
-
-    def has_error(self, value):
-        response = self.is_valid(value)
-        if response is True:
-            return None
-        return response
     
     def is_valid(self, value):
         return True
-
-    def tuple_list_to_value(self, tupleList):
+    
+    def save_value(self):
+        if self.database:
+            self.database.save(self.to_database(self.value))
+    
+    def from_database(self, value):
         raise Exception(
-            f"tuple_list_to_value() method not implemented for {self.__class__.__name__}"
+            f"from_database() method not implemented for {self.__class__.__name__}"
         )
 
-    def value_to_tuple_list(self, value):
+    def to_database(self, value):
         raise Exception(
-            f"value_to_tuple_list() method not implemented for {self.__class__.__name__}"
+            f"to_database() method not implemented for {self.__class__.__name__}"
         )
+
+class ValidationError(Exception):
+    pass

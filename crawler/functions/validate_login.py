@@ -16,6 +16,6 @@ class ValidateLogin(Function):
         if Session.set_session(self.username.value, self.password.value):
             return True
         else:
-            self.username.invalidate.emit()
-            self.password.invalidate.emit()
+            self.username.reset_value()
+            self.password.reset_value()
             raise Exception('Der Benutzername oder das Passwort ist falsch.')
