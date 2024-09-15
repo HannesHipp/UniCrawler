@@ -27,6 +27,8 @@ class ReadableDatabase(Database):
                 json.dump({}, file)
 
     def save(self, value):
+        if value is None:
+            value = ""
         with open(self.FILENAME, 'r+') as file:
             file_data = json.load(file)
             file_data[self.name] = value
@@ -43,6 +45,9 @@ class ReadableDatabase(Database):
 class SecureDatabase(Database):
     
     def save(self, value):
+        if value is None:
+            self.delete()
+            return
         if not isinstance(value, str):
             raise TypeError("Only strings can be stored in the secure database.")
         keyring.set_password("UniCrawler", self.name, value)
@@ -50,3 +55,5 @@ class SecureDatabase(Database):
     def get(self):
         return keyring.get_password("UniCrawler", self.name)
 
+    def delete(self):
+        keyring.delete_password("UniCrawler", self.name)
