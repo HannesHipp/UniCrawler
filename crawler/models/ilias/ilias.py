@@ -67,6 +67,9 @@ class Course(Root):
     name = DynamicAttribute('string')
     url = DynamicAttribute('href')
 
+    def get_type_hash(self):
+        return self.url.split("crs_")[1].split(".html")[0]
+
 
 class IlContainerBlock(Root):
 

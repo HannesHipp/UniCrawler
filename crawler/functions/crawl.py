@@ -30,7 +30,7 @@ class Crawl(Function):
         courses_to_crawl = [course for course in self.courses.value if course.to_crawl]
         for index, course in enumerate(courses_to_crawl):
             self.current_courses_name.submit_value(course.name)
-            crawled_file_nodes += self.crawl_page(course.element, extractor)
+            crawled_file_nodes += self.crawl_page(course.html_node, extractor)
             self.percentage_crawled.submit_value(
                 int((index+1)/len(courses_to_crawl)*100)
             )
