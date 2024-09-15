@@ -3,7 +3,7 @@ from PyQt5.QtWidgets import QWidget
 from PyQt5.uic import loadUi
 
 from framework.gui_module import GuiModule
-from framework.window import Window
+from framework.app import App
 import crawler.resources.resources
 
 
@@ -19,7 +19,7 @@ class Frame(QWidget):
             button = getattr(self, button_name)
             button.pressed.connect(self.finalize)
         self.gui_modules = []
-        self.display.connect(Window.instance.selectFrame)
+        self.display.connect(App.instance.selectFrame)
 
     def add_module(self, gui_module: GuiModule):
         self.gui_modules.append(gui_module)
