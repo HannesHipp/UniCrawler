@@ -8,10 +8,11 @@ class OutputFrame(Frame):
             self, 
             path, 
             function: Function, 
+            datapoints=[],
             next_frame_button_names=[], 
             start_button_name=None, 
             cancel_button_name=None):
-        super().__init__(path, next_frame_button_names)
+        super().__init__(path, datapoints, next_frame_button_names)
         self.function = function
         self.function.setAutoDelete(False)
 
@@ -27,14 +28,20 @@ class OutputFrame(Frame):
         if not next_frame_button_names:
            self.function.signals.ended.connect(self.finalize)
             
-
     def show(self):
         if self.auto_start:
             self.function.start_execution()
         super().show()
 
-    def get_module_errors(self):
-        module_errors = super().get_module_errors()
-        if self.function.error:
-            module_errors.append(self.function.error)
-        return module_errors
+    def finalize(self):
+        function_error = self.function.error
+        if function_error:
+            self.show_errors(function_error)
+        super().finalize()
+
+    def get_sender_name(self, sender):
+        try:
+            sender_name = super().get_sender_name(sender)
+        except:
+            sender_name = None
+        return sender_name
