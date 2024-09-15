@@ -9,6 +9,7 @@ class CourseSelectionFrame(Frame):
     def __init__(self, courses: Courses):
         super().__init__(
             path="crawler\\resources\\course_selection_view.ui",
+            datapoints=[courses],
             next_frame_button_names=['button_select_choice']
         )
         self.courses = courses

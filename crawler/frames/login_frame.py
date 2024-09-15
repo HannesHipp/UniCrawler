@@ -7,6 +7,7 @@ class LoginFrame(Frame):
     def __init__(self, username, password):
         super().__init__(
             path="crawler\\resources\\login_view.ui",
+            datapoints=[username, password],
             next_frame_button_names=['button_login']
         )
         self.username = username

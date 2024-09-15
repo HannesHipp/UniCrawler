@@ -10,6 +10,7 @@ class LoginValidationFrame(OutputFrame):
     def __init__(self, username: Username, password: Password):
         super().__init__(
             path="crawler\\resources\\login_validation_view.ui",
+            datapoints=[username, password],
             function=ValidateLogin(username, password)
         )
         self.username = username

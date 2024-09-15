@@ -2,6 +2,7 @@ from PyQt5.QtCore import pyqtSignal
 from PyQt5.QtWidgets import QWidget
 from PyQt5.uic import loadUi
 
+from framework.datapoint import Datapoint
 from framework.gui_module import GuiModule
 from framework.app import App
 import crawler.resources.resources
@@ -11,14 +12,14 @@ class Frame(QWidget):
 
     display = pyqtSignal(object)
 
-    def __init__(self, path, next_frame_button_names=[]):
+    def __init__(self, path, datapoints:list[Datapoint] = [], next_frame_button_names=[]):
         super().__init__()
         loadUi(path, self)
-        self.index = None
         for button_name in next_frame_button_names:
             button = getattr(self, button_name)
             button.pressed.connect(self.finalize)
         self.gui_modules = []
+        self.datapoints = datapoints
         self.display.connect(App.instance.select_frame)
 
     def add_module(self, gui_module: GuiModule):
@@ -35,16 +36,15 @@ class Frame(QWidget):
             self.show_errors(errors)
         else:
             self.save_datapoints()
-            next_frame = self.get_next_frame(self.sender())
+            sender_name = self.get_sender_name(self.sender())
+            next_frame = self.decide_next_frame(sender_name)
             next_frame.show()
 
-    def get_next_frame(self, sender):
-        button_name = None
+    def get_sender_name(self, sender):
         for attribute, value in self.__dict__.items():
             if value is sender:
-                button_name = str(attribute)
-                break
-        return self.decide_next_frame(button_name)
+                return str(attribute)
+        raise Exception(f"Sender not found in {self.__class__.__name__}")
 
     def get_module_errors(self):
         errors = []
@@ -57,10 +57,10 @@ class Frame(QWidget):
         print(errors)
 
     def save_datapoints(self):
-        for gui_module in self.gui_modules:
-            gui_module.save_datapoint()
+        for datapoint in self.datapoints:
+            datapoint.save_value()
 
     def decide_next_frame(self):
-        raise Exception(
-            f"decideNextFrame method not implemented in {self.__class__.__name__}"
+        raise NotImplementedError(
+            f"decide_next_frame method not implemented for {self.__class__.__name__}."
         )

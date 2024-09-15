@@ -18,9 +18,6 @@ class GuiModule:
     def update(self):
         self.set_value(self.datapoint.value)
 
-    def save_datapoint(self):
-        self.datapoint.save_to_db()
-
     def get_value(self):
         return None
     

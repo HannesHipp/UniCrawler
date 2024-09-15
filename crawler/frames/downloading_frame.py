@@ -16,6 +16,7 @@ class DownloadingFrame(OutputFrame):
         function = Download(path, files_and_videos, current_file, percentage_downloaded)
         super().__init__(
             path="crawler\\resources\\downloading_view.ui",
+            datapoints=[path, files_and_videos],
             function=function
         )
         self.path = path

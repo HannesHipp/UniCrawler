@@ -8,6 +8,7 @@ class GetCoursesFrame(OutputFrame):
     def __init__(self, username, password, courses, autostart):
         super().__init__(
             path="crawler\\resources\\get_courses_view.ui",
+            datapoints=[courses, autostart],
             function=GetCourses(username, password, courses)
         )
         self.courses = courses

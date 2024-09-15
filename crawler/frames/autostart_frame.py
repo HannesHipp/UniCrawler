@@ -22,7 +22,7 @@ class AutostartFrame(OutputFrame):
         self.courseSelectionFrame = courseSelectionFrame
         self.crawlingFrame = crawlingFrame
 
-    def decide_next_frame(self, pressedButton):
+    def decide_next_frame(self, pressed_button):
         if self.function.canceled:
             return self.courseSelectionFrame
         return self.crawlingFrame

@@ -7,6 +7,7 @@ class PathSelectionFrame(Frame):
     def __init__(self, path):
         super().__init__(
             path="crawler\\resources\\path_selection_view.ui",
+            datapoints=[path],
             next_frame_button_names=['button_continue']
         )
         self.path = path

@@ -16,6 +16,7 @@ class CrawlingFrame(OutputFrame):
         function = Crawl(courses, files_and_videos, current_course_name, percentage_crawled)
         super().__init__(
             path="crawler\\resources\\crawling_view.ui",
+            datapoints=[courses, files_and_videos],
             function=function
         )
         self.courses = courses
