@@ -22,7 +22,7 @@ class Courses(Datapoint):
         for course in courses:
             result.append((
                 course.get_hash(), 
-                course.to_download
+                course.to_crawl
             ))
         return result
 
@@ -31,7 +31,7 @@ class Course:
 
     def __init__(self, element) -> None:
         self.element = element
-        self.to_download = False
+        self.to_crawl = False
         self.is_new = False
         self.was_crawled = False
 

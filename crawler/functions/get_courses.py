@@ -29,7 +29,7 @@ class GetCourses(Function):
         for course_element in course_elements:
             current_course = Course(course_element)
             if (hash:=current_course.get_hash()) in old_courses:
-                current_course.to_download = old_courses[hash]
+                current_course.to_crawl = old_courses[hash]
             else:
                 current_course.is_new = True
             current_courses.append(current_course)

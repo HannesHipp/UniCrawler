@@ -18,7 +18,7 @@ class CourseSelectionFrame(Frame):
                 courses, 
                 self.listView,
                 'name', 
-                "to_download", 
+                "to_crawl", 
                 "is_new"
             )
         )
