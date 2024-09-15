@@ -3,7 +3,7 @@ from framework.app import App
 from crawler.datapoints.username import Username
 from crawler.datapoints.password import Password
 from crawler.datapoints.courses import Courses
-from crawler.datapoints.files_and_videos import FilesAndVideos
+from crawler.datapoints.files import Files
 from crawler.datapoints.path import Path
 from crawler.datapoints.autostart import Autostart
 
@@ -25,7 +25,7 @@ path = Path()
 courses = Courses()
 autostart = Autostart()
 autostart.submit_value(True)
-files_and_videos = FilesAndVideos()
+files = Files()
 
 
 login_frame = LoginFrame(username, password)
@@ -34,8 +34,8 @@ path_frame = PathSelectionFrame(path)
 get_courses_frame = GetCoursesFrame(username, password, courses, autostart)
 course_selection_frame = CourseSelectionFrame(courses)
 autostart_frame = AutostartFrame()
-crawling_frame = CrawlingFrame(courses, files_and_videos)
-downloading_frame = DownloadingFrame(path, files_and_videos)
+crawling_frame = CrawlingFrame(courses, files)
+downloading_frame = DownloadingFrame(path, files)
 success_frame = EndFrame()
 
 
@@ -54,7 +54,6 @@ else:
     app.start_with(login_frame)
 
 # TO-DO
-    # Herruntergeladene Items werden nicht gespeichert
     # Auflösung Laptop Michi
     # Verkehrstechnik nicht vollständig
     # Kurse Ausklappmenü
