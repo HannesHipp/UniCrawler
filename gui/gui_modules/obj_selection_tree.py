@@ -5,8 +5,8 @@ from PyQt5.QtGui import QStandardItemModel, QStandardItem
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QStandardItemModel, QStandardItem, QBrush, QColor
 
-from framework.datapoint import Datapoint
-from framework.gui_module import GuiModule
+from gui.datapoint import Datapoint
+from gui.gui_module import GuiModule
 
 
 class ObjSelectionTree(GuiModule):

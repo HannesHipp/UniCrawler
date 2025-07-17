@@ -1,5 +1,5 @@
-from framework.datapoint import Datapoint
-from framework.function import Function
+from gui.datapoint import Datapoint
+from gui.function import Function
 
 from crawler.extraction.html_node import HtmlNode
 from crawler.functions.download import filter_url

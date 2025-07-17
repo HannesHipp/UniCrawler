@@ -1,4 +1,4 @@
-from framework.output_frame import OutputFrame
+from gui.output_frame import OutputFrame
 
 from crawler.functions.get_courses import GetCourses
 

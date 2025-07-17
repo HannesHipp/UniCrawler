@@ -1,4 +1,4 @@
-from framework.app import App
+from gui.app import App
 
 from crawler.datapoints.username import Username
 from crawler.datapoints.password import Password

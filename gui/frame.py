@@ -2,9 +2,9 @@ from PyQt5.QtCore import pyqtSignal
 from PyQt5.QtWidgets import QWidget
 from PyQt5.uic import loadUi
 
-from framework.datapoint import Datapoint
-from framework.gui_module import GuiModule
-from framework.app import App
+from gui.datapoint import Datapoint
+from gui.gui_module import GuiModule
+from gui.app import App
 import crawler.resources.resources
 
 

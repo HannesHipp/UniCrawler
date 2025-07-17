@@ -1,5 +1,5 @@
-from framework.frame import Frame
-from framework.function import Function
+from gui.frame import Frame
+from gui.function import Function
 
 
 class OutputFrame(Frame):

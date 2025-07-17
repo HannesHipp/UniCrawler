@@ -1,5 +1,5 @@
-from framework.database import SecureDatabase
-from framework.datapoint import Datapoint
+from gui.database import SecureDatabase
+from gui.datapoint import Datapoint
 
 
 class Password(Datapoint):

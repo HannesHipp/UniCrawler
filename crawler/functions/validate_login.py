@@ -1,4 +1,4 @@
-from framework.function import Function
+from gui.function import Function
 
 from crawler.datapoints.username import Username
 from crawler.datapoints.password import Password

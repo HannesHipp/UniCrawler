@@ -1,5 +1,5 @@
-from framework.gui_modules.path_selector import PathSelector
-from framework.frame import Frame
+from gui.gui_modules.path_selector import PathSelector
+from gui.frame import Frame
 
 
 class PathSelectionFrame(Frame):

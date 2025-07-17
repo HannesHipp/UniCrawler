@@ -1,7 +1,7 @@
 from crawler.extraction.html_node import HtmlNode
 from crawler.models.ilias.ilias import File as IliasFile
-from framework.database import ReadableDatabase
-from framework.datapoint import Datapoint
+from gui.database import ReadableDatabase
+from gui.datapoint import Datapoint
 
 class File:
 

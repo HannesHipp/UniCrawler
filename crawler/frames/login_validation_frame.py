@@ -1,4 +1,4 @@
-from framework.output_frame import OutputFrame
+from gui.output_frame import OutputFrame
 
 from crawler.datapoints.password import Password
 from crawler.datapoints.username import Username

@@ -1,7 +1,7 @@
-from framework.gui_modules.text_label import TextLabel
-from framework.output_frame import OutputFrame
-from framework.function import Function
-from framework.datapoint import Datapoint
+from gui.gui_modules.text_label import TextLabel
+from gui.output_frame import OutputFrame
+from gui.function import Function
+from gui.datapoint import Datapoint
 from time import sleep
 
 

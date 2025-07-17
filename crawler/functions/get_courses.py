@@ -1,7 +1,7 @@
 import re
 from crawler.extraction.html_node import HtmlNode
 from crawler.functions.download import filter_url
-from framework.function import Function
+from gui.function import Function
 
 from crawler.datapoints.courses import Courses, Course
 from crawler.datapoints.username import Username

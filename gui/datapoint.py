@@ -1,5 +1,5 @@
 from PyQt5.QtCore import QObject, pyqtSignal
-from framework.database import Database
+from gui.database import Database
 
 
 class Datapoint(QObject):

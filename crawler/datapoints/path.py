@@ -1,6 +1,6 @@
 import pathlib
-from framework.database import ReadableDatabase
-from framework.datapoint import Datapoint
+from gui.database import ReadableDatabase
+from gui.datapoint import Datapoint
 
 
 class Path(Datapoint):

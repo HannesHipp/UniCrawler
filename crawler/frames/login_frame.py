@@ -1,5 +1,5 @@
-from framework.frame import Frame
-from framework.gui_modules.text_field import TextField
+from gui.frame import Frame
+from gui.gui_modules.text_field import TextField
 
 
 class LoginFrame(Frame):

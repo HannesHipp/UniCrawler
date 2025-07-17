@@ -1,7 +1,7 @@
-from framework.datapoint import Datapoint
-from framework.gui_modules.progress_bar import ProgressBar
-from framework.gui_modules.text_label import TextLabel
-from framework.output_frame import OutputFrame
+from gui.datapoint import Datapoint
+from gui.gui_modules.progress_bar import ProgressBar
+from gui.gui_modules.text_label import TextLabel
+from gui.output_frame import OutputFrame
 
 from crawler.datapoints.courses import Courses
 from crawler.datapoints.files import Files

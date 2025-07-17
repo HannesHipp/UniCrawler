@@ -1,4 +1,4 @@
-from framework.datapoint import Datapoint
+from gui.datapoint import Datapoint
 
 
 class GuiModule:

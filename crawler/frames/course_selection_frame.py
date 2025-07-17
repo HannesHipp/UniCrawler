@@ -1,5 +1,5 @@
 from crawler.extraction.html_node import HtmlNode
-from framework.frame import Frame
+from gui.frame import Frame
 from crawler.datapoints.courses import Course, Courses
 
 
@@ -30,7 +30,7 @@ from PyQt5.QtGui import QStandardItemModel, QStandardItem
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QStandardItemModel, QStandardItem, QBrush, QColor, QFont
 
-from framework.gui_module import GuiModule
+from gui.gui_module import GuiModule
 import re
 
 

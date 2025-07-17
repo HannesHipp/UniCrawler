@@ -1,6 +1,6 @@
 import os
-from framework.datapoint import Datapoint
-from framework.function import Function
+from gui.datapoint import Datapoint
+from gui.function import Function
 
 from crawler.datapoints.files import Files
 from crawler.datapoints.path import Path

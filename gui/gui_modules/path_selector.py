@@ -1,7 +1,7 @@
 from pathlib import Path
 from PyQt5.QtWidgets import QLabel, QPushButton, QFileDialog
-from framework.datapoint import Datapoint
-from framework.gui_module import GuiModule
+from gui.datapoint import Datapoint
+from gui.gui_module import GuiModule
 
 
 class PathSelector(GuiModule):

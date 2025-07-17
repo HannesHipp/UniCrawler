@@ -1,4 +1,4 @@
-from framework.frame import Frame
+from gui.frame import Frame
 
 
 class EndFrame(Frame):
