@@ -1,5 +1,6 @@
 import re
 from crawler.extraction.html_node import HtmlNode
+from crawler.functions.download import filter_url
 from framework.function import Function
 
 from crawler.datapoints.courses import Courses, Course
@@ -24,7 +25,7 @@ class GetCourses(Function):
         root = extractor.root_type(None)
         root.name = 'Ilias'
         root.set_soup(Session.get_content(COURSES_URL))
-        course_elements:list[HtmlNode] = extractor.crawl_node(root)
+        course_elements:list[HtmlNode] = extract_course_items(root, extractor)
 
         saved_courses:list[Course] = self.courses.value
         all_courses = []
@@ -47,6 +48,20 @@ class GetCourses(Function):
         unify_semesters(all_courses)
 
         self.courses.submit_value(all_courses)
+
+def extract_course_items(root:HtmlNode, extractor:Extractor):
+    course_pages = extractor.crawl_node(root)
+    courses = []
+    for course_page in course_pages:
+        course_page.set_soup(
+            Session.get_content(
+                filter_url(course_page.url, course_page.url_format)
+            ))
+        courses.extend(extractor.crawl_node(course_page))
+    # remove course pages from tree
+    for course in courses:
+        course.parent.parent = root
+    return courses
 
 def unify_semesters(courses: list[Course]):
     root = courses[0].html_node.parent.parent

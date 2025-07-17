@@ -18,6 +18,10 @@ class Course:
     @property
     def name(self):
         return self.html_node.name
+    
+    @property
+    def semester_node(self):
+        return self.html_node.parent
 
     def get_hash(self):
         if self.hash:
