@@ -19,12 +19,16 @@ class GetCourses(Function):
         self.courses = courses
 
     def execute(self):
-        COURSES_URL = 'https://ilias3.uni-stuttgart.de/ilias.php?baseClass=ildashboardgui&cmd=show&view=1'
+        COURSES_URL = 'https://ilias3.uni-stuttgart.de/ilias.php?baseClass=ilDashboardGUI&cmd=jumpToSelectedItems'
         Session.set_session(self.username.value, self.password.value)
         extractor = Extractor('crawler\\models\\ilias')
         root = extractor.root_type(None)
         root.name = 'Ilias'
         root.set_soup(Session.get_content(COURSES_URL))
+
+        with open("root_soup.html", "w", encoding="utf-8") as f:
+            f.write(str(root.soup))
+            
         course_elements:list[HtmlNode] = extract_course_items(root, extractor)
 
         saved_courses:list[Course] = self.courses.value
@@ -49,21 +53,24 @@ class GetCourses(Function):
 
         self.courses.submit_value(all_courses)
 
-def extract_course_items(root:HtmlNode, extractor:Extractor):
-    course_pages = extractor.crawl_node(root)
+def extract_course_items(root: HtmlNode, extractor: Extractor):
+    # Find the last page number for pagination
+    last_page_button = root.soup.find(
+        lambda tag: tag.name == 'button' and 'pdmem_0_blnavpage' in tag.get('data-action', '') and tag.parent.get('class') == ['last']
+    )
+    last_page_nr = int(last_page_button['data-action'].split('pdmem_0_blnavpage=')[1])
+    data_action = last_page_button['data-action'][:-1]
     courses = []
-    for course_page in course_pages:
-        course_page.set_soup(
-            Session.get_content(
-                filter_url(course_page.url, course_page.url_format)
-            ))
-        courses.extend(extractor.crawl_node(course_page))
-    # remove course pages from tree
-    for course in courses:
-        course.parent.parent = root
+    for i in range(0, last_page_nr + 1):
+        url = f'https://ilias3.uni-stuttgart.de/{data_action}{i}'
+        soup = Session.get_content(url)
+        root.set_soup(soup)
+        courses.extend(extractor.crawl_node(root))
     return courses
 
 def unify_semesters(courses: list[Course]):
+    if not courses:
+        return
     root = courses[0].html_node.parent.parent
     semesters = {} 
     other_semester = HtmlNode(root)

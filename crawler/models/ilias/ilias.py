@@ -8,7 +8,7 @@ from json import loads
 
 class Root(HtmlNode):
 
-    child_types = ['CoursePage'] 
+    child_types = ['CourseDate'] 
     scope = Locator(
         ExactFilter(
             {'id': 'mainspacekeeper'}
@@ -19,23 +19,6 @@ class Root(HtmlNode):
         'Uni_Stuttgart/mobs/': 'https://ilias3.uni-stuttgart.de/'
     }
     tree_importance = 0
-
-class CoursePage(Root):
-
-    child_types = ['CourseDate']
-    is_leaf = True
-    locator = Locator(
-        ExactFilter(
-            {'class': 'il-viewcontrol-pagination l-bar__element'}
-        ),
-        subitem_locator=Locator(
-            ContainsFilter(
-                {'data-action': 'blnavpage='}
-            )
-        )
-    )
-
-    url = DynamicAttribute('data-action')
 
 
 class CourseDate(Root):
