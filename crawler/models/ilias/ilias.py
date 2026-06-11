@@ -54,7 +54,6 @@ class Course(Root):
         'Lm',
         'File',
         'Video',
-        'CopaFolder'
     ]
     is_leaf = True
     locator = Locator(
@@ -75,12 +74,14 @@ class IlContainerBlock(Root):
     child_types = [
         'Folder',
         'OPDFolder',
+        'InteractiveVideoFolder',
         'Lm',
-        'InteractiveVideoFolder'
+        'File',
+        'Video'
     ]
     locator = Locator(
         ExactFilter(
-            {'class':'ilContainerBlock container-fluid form-inline'}
+            {'class':'ilContainerBlock form-inline'}
         )
     )
 
@@ -120,9 +121,12 @@ class File(Root):
     child_types = []
     is_leaf = True
     locator = Locator(
-        ContainsFilter(
-            {'href':'cmd=sendfile'}
-        )
+        ContainsFilter({
+            'href':[
+                'cmd=sendfile',
+                'cmd=downloadFile'
+            ]
+        })
     )
 
     name = DynamicAttribute('text')
@@ -166,7 +170,7 @@ class Lm(Root):
     is_leaf = True
     locator = Locator(
         ContainsFilter(
-            {'href':'_lm_'}
+            {'href':'/lm/'}
         )
     )
 

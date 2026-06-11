@@ -35,6 +35,16 @@ class ExactFilter(Filter):
 class ContainsFilter:
 
     def __init__(self, contains_dict) -> None:
+        if not isinstance(contains_dict, dict):
+            raise Exception(f"ContainsFilter only supports dictionaries. Got {contains_dict}")
+        for _, value in contains_dict.items():
+            if isinstance(value, str):
+                continue
+            elif isinstance(value, list):
+                if not all(isinstance(v, str) for v in value):
+                    raise Exception(f"ContainsFilter only supports lists of strings and strings. Got {contains_dict}")
+            else:
+                raise Exception(f"ContainsFilter only supports lists of strings and strings. Got {contains_dict}")
         self.contains_dict:dict[str,str] = contains_dict
 
     def filter_soup(self, soup: BeautifulSoup):
@@ -47,11 +57,12 @@ class ContainsFilter:
     def tag_matches(self, tag):
         for attr_name, value in self.contains_dict.items():
             tag_value = get_attr(tag, attr_name)
-            if not tag_value:
-                return False
-            if value not in tag_value:
-                return False
-        return True
+            if isinstance(value, str):
+                value = [value]
+            for v in value:
+                if tag_value and v in tag_value:
+                    return True
+        return False
 
 
 class Locator:

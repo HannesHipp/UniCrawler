@@ -58,6 +58,8 @@ def extract_course_items(root: HtmlNode, extractor: Extractor):
     last_page_button = root.soup.find(
         lambda tag: tag.name == 'button' and 'pdmem_0_blnavpage' in tag.get('data-action', '') and tag.parent.get('class') == ['last']
     )
+    if last_page_button is None:
+        return extractor.crawl_node(root)
     last_page_nr = int(last_page_button['data-action'].split('pdmem_0_blnavpage=')[1])
     data_action = last_page_button['data-action'][:-1]
     courses = []
